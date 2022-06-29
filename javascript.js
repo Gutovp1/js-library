@@ -52,7 +52,7 @@ function createCard(book, myLibrary){
         const newRead = document.createElement('div');
         const readStatus = document.createElement('button');
         readStatus.classList.add('read');
-        newRead.textContent = "Have read it? ";
+        newRead.textContent = "Have you read it? ";
         readStatus.textContent = book.read.value;
         newCard.appendChild(newRead);
         newCard.appendChild(readStatus);
@@ -69,19 +69,27 @@ dashboardCards.addEventListener('click', e => {
     }
 });
 
+function validateInputs(){
+    if(titleInput.value != "" && authorInput.value != "" && pagesInput.value != ""){
+        return true;
+    } else
+        return false;
+}
+
 const btnAdd = document.querySelector("#add-book-btn");
 btnAdd.addEventListener('click',(event) => {
-    if(!gofor){
-    //prevent the default process of submitting data to a web server and refreshing the page
-    event.preventDefault();
-    let NewBook = new Book(titleInput, authorInput, pagesInput, readInput);
-    NewBook.prototype = Object.create(Book.prototype);
-    addBookToLibrary(NewBook);
-    bookForm.reset();
-    bookForm.read.value = '-';
-    bookForm.read.style.background = 'white';
+    if(validateInputs()){
+        //prevent the default process of submitting data to a web server and refreshing the page
+        event.preventDefault();
+        let NewBook = new Book(titleInput, authorInput, pagesInput, readInput);
+        NewBook.prototype = Object.create(Book.prototype);
+        addBookToLibrary(NewBook);
+        bookForm.reset();
+        bookForm.read.value = 'no';
+        bookForm.read.style.background = 'white';
     }
 })
+
 
 function btnToggle(){
     let btn = document.getElementById("read");
@@ -97,14 +105,6 @@ function btnToggle(){
     }
 }
 
-function changeReadStatus(){
-    let statusCard = document.querySelector(".read");
-    if(statusCard.textContent == 'yes')
-        statusCard.textContent = 'no';
-    else
-        statusCard.textContent = 'yes';
-}
-
 //change the status of read for added books
 dashboardCards.addEventListener('click', e => {
     let targetBtn = e.target;
@@ -114,6 +114,5 @@ dashboardCards.addEventListener('click', e => {
         } else{
             targetBtn.parentNode.lastChild.textContent = "yes";
         }
-        // changeReadStatus();
     }    
 });
