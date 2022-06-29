@@ -1,0 +1,94 @@
+body{
+    background-color: gainsboro;
+    margin: 0;
+}
+
+.container{
+    background-color: gray;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 1fr 9fr;
+}
+
+.sidebar{
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    color: white;
+    background-image: linear-gradient(to top, gray, black);
+}
+
+.sidebar ul{
+    margin: 0;
+    padding: 2rem;
+}
+
+.sidebar li{
+    padding: 0.5rem;
+    list-style-type: none;
+}
+
+form{
+    display: grid;
+    justify-items: center;
+    align-content: center;
+}
+
+#add-book-btn{
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+li label{
+    /* height: 40px; */
+    font-size: 23px;
+}
+
+.header{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    background-color:saddlebrown;
+    display: grid;
+    text-align: center;
+    align-items: center;
+    padding: 1.5rem;
+    height: 40px;
+    color: white;
+    font-size: 40px;
+    text-shadow: 2px 2px 2px black;
+}
+
+.dashboard{
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    background-color: saddlebrown;
+    background-image: url(./img/library-bgi.png);
+    background-image: repeat;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(50px, 8rem));
+    
+}
+
+.card{
+    background-color: lightyellow;
+    margin: 5px;
+    padding-bottom: 8px;
+    height: 7rem;
+    display: grid;
+    justify-items: center;
+    box-shadow: 3px 3px 5px black;
+}
+
+.card button:first-child{
+    justify-self: right;
+    color: white;
+    background-color: red;
+    border: none;
+}
+
+.card p{
+    text-align: end;
+    align-self: end;
+    padding: 0;
+    margin: 0;
+}

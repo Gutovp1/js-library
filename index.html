@@ -9,6 +9,43 @@
     <title>Library</title>
 </head>
 <body>
-    
+    <div class="container"> 
+        <div class="sidebar">
+            <form class="book-form" action="#">
+                <ul>
+                    <li>
+                        <label for="title">Title:</label>
+                        <input type="text" id="title" name="title" required>
+                    </li>
+                    <li>
+                        <label for="author">Author:</label>
+                        <input type="text" id="author" name="author" required>
+                    </li>
+                    <li>
+                        <label for="pages">Pages:</label>
+                        <input type="number" id="pages" name="pages" required>
+                    </li>
+                    <li>
+                        <label for="read">Read?</label>
+                        <input type="button" id="read" onclick="btnToggle()" value="no" required>
+                    
+                    </li>
+                </ul>
+                <!-- <div> -->
+                    <button id="add-book-btn">Add New Book</button>
+                <!-- </div>    -->
+            </form>
+            
+        </div>
+        <div class="header">
+            Library
+        </div>
+        <div class="dashboard">
+            <!-- <h1 class="bookList"></h1> -->
+            <!-- <div class="cards">
+                <div class="c-title"></div>
+            </div> -->
+        </div>
+    </div>
 </body>
 </html>
