@@ -28,36 +28,31 @@ function addBookToLibrary(book){
 
 function createCard(book, myLibrary){
         const newCard = document.createElement('div');
-        newCard.classList.add('card');
-        
         const btnRemove = document.createElement('button');
-        btnRemove.classList.add('delete');
-        // btnRemove.classList.add(`${index}`);
-        btnRemove.textContent = "X";
-        newCard.appendChild(btnRemove);
-
         const newTitle = document.createElement('div');
-        newTitle.textContent = "Title: "+ book.title.value +"\n";
-        newCard.appendChild(newTitle);
-
         const newAuthor = document.createElement('div');
-        newAuthor.textContent = "Author: "+ book.author.value +"\n";
-        newCard.appendChild(newAuthor);
-
         const newPages = document.createElement('div');
-        newPages.textContent = "Pages: "+ book.pages.value +"\n";
-        newCard.appendChild(newPages);
-
-
         const newRead = document.createElement('div');
-        const readStatus = document.createElement('button');
-        readStatus.classList.add('read');
-        newRead.textContent = "Have you read it? ";
-        readStatus.textContent = book.read.value;
-        newCard.appendChild(newRead);
-        newCard.appendChild(readStatus);
-
+        const btnRead = document.createElement('button');
         
+        newCard.classList.add('card');
+        btnRemove.classList.add('delete');
+        btnRead.classList.add('read');
+        // btnRemove.classList.add(`${index}`);
+        
+        btnRemove.textContent = "X";
+        newTitle.textContent = "Title: "+ book.title.value +"\n";
+        newAuthor.textContent = "Author: "+ book.author.value +"\n";
+        newPages.textContent = "Pages: "+ book.pages.value +"\n";
+        newRead.textContent = "Have you read it?";
+        btnRead.textContent = book.read.value;
+        
+        newCard.appendChild(btnRemove);
+        newCard.appendChild(newTitle);
+        newCard.appendChild(newAuthor);
+        newCard.appendChild(newPages);
+        newCard.appendChild(newRead);
+        newCard.appendChild(btnRead);
         dashboardCards.appendChild(newCard);
 }
 
@@ -76,6 +71,12 @@ function validateInputs(){
         return false;
 }
 
+function refreshForm(){
+    bookForm.reset();
+    bookForm.read.value = 'no';
+    bookForm.read.style.background = 'white';
+}
+
 const btnAdd = document.querySelector("#add-book-btn");
 btnAdd.addEventListener('click',(event) => {
     if(validateInputs()){
@@ -84,9 +85,7 @@ btnAdd.addEventListener('click',(event) => {
         let NewBook = new Book(titleInput, authorInput, pagesInput, readInput);
         NewBook.prototype = Object.create(Book.prototype);
         addBookToLibrary(NewBook);
-        bookForm.reset();
-        bookForm.read.value = 'no';
-        bookForm.read.style.background = 'white';
+        refreshForm()
     }
 })
 
@@ -111,8 +110,10 @@ dashboardCards.addEventListener('click', e => {
     if(targetBtn.classList.contains('read')){
         if (targetBtn.parentNode.lastChild.textContent == "yes") {
             targetBtn.parentNode.lastChild.textContent = "no";
+            targetBtn.parentNode.lastChild.style.background = "lightsalmon";
         } else{
             targetBtn.parentNode.lastChild.textContent = "yes";
+            targetBtn.parentNode.lastChild.style.background = "lightgreen";
         }
     }    
 });
