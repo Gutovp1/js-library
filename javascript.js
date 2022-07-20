@@ -8,17 +8,18 @@ const bookForm = document.querySelector('.book-form');
 
 let gofor = false;
 
-function Book(title, author, pages, read){
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
+class Book{
+    constructor(title, author, pages, read){
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
     this.read = read;
 }
 
-Book.prototype.info = function (){
-    return `${this.title.value} ${this.author.value} ${this.pages.value}  ${this.read.value}`
+    get info(){
+        return `${this.title.value} ${this.author.value} ${this.pages.value}  ${this.read.value}`;
+    }
 }
-
 let myLibrary = [];
 
 function addBookToLibrary(book){
@@ -38,7 +39,8 @@ function createCard(book, myLibrary){
         newCard.classList.add('card');
         btnRemove.classList.add('delete');
         btnRead.classList.add('read');
-        // btnRemove.classList.add(`${index}`);
+        btnRemove.setAttribute('id',`${myLibrary.length}`);
+        alert(btnRemove.id);
         
         btnRemove.textContent = "X";
         newTitle.textContent = "Title: "+ book.title.value +"\n";
@@ -83,9 +85,9 @@ btnAdd.addEventListener('click',(event) => {
         //prevent the default process of submitting data to a web server and refreshing the page
         event.preventDefault();
         let NewBook = new Book(titleInput, authorInput, pagesInput, readInput);
-        NewBook.prototype = Object.create(Book.prototype);
+       // NewBook.prototype = Object.create(Book.prototype);
         addBookToLibrary(NewBook);
-        refreshForm()
+        refreshForm();
     }
 })
 
