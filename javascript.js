@@ -6,8 +6,6 @@ const booksLib = document.querySelector(".bookList");
 const dashboardCards = document.querySelector(".dashboard");
 const bookForm = document.querySelector('.book-form');
 
-let gofor = false;
-
 class Book{
     constructor(title, author, pages, read){
     this.title = title;
@@ -21,7 +19,7 @@ class Book{
     }
 }
 let myLibrary = [];
-
+//review the code to get why the array are not being updated with the book infos
 function addBookToLibrary(book){
     myLibrary.push(book);
     createCard(book, myLibrary);
@@ -39,8 +37,7 @@ function createCard(book, myLibrary){
         newCard.classList.add('card');
         btnRemove.classList.add('delete');
         btnRead.classList.add('read');
-        btnRemove.setAttribute('id',`${myLibrary.length}`);
-        alert(btnRemove.id);
+        btnRemove.setAttribute('data-id',`${myLibrary.length}`);
         
         btnRemove.textContent = "X";
         newTitle.textContent = "Title: "+ book.title.value +"\n";
@@ -60,10 +57,10 @@ function createCard(book, myLibrary){
 
 //delete button in each book added
 dashboardCards.addEventListener('click', e => {
-    let target = e.target;
-    if(target.classList.contains('delete')){
-        target.parentNode.outerHTML = '';
+    if(e.target.classList.contains('delete')){
+        e.target.parentNode.outerHTML = '';
     }
+     myLibrary = myLibrary.splice((parseInt(e.target.dataset.id)-1),1);
 });
 
 function validateInputs(){
