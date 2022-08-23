@@ -2,10 +2,12 @@ const titleInput = document.querySelector("#title");
 const authorInput = document.querySelector("#author");
 const pagesInput = document.querySelector("#pages");
 const readInput = document.querySelector("#read");
-const booksLib = document.querySelector(".bookList");
 const dashboardCards = document.querySelector(".dashboard");
 const bookForm = document.querySelector(".book-form");
 const btnAddBook = document.querySelector("#add-book-btn");
+const btnInsertBook = document.querySelector(".btn-insert-book");
+const popupForm = document.querySelector(".popup");
+const blurryLayer = document.querySelector(".blur");
 
 let myLibrary = [];
 
@@ -22,6 +24,13 @@ class Book {
     return `${this.title} ${this.author} ${this.pages}  ${this.read}`;
   }
 }
+
+function showFormPopup() {
+  popupForm.classList.add("active");
+  blurryLayer.classList.add("active");
+}
+
+btnInsertBook.addEventListener("click", showFormPopup);
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -102,6 +111,8 @@ btnAddBook.addEventListener("click", (event) => {
     addBookToLibrary(NewBook);
     printLibrary(myLibrary);
     refreshForm();
+    popupForm.classList.remove("active");
+    blurryLayer.classList.remove("active");
   }
 });
 
