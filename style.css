@@ -37,41 +37,56 @@ body {
   left: 50%;
   top: 50%;
   z-index: 1;
-  width: 300px;
-  /* transform: translate(-50%, -50%) scale(0); */
+  width: 30vw;
   color: white;
-  background-image: linear-gradient(to top, gray, black);
+  background-color: sandybrown;
   display: none;
+  transform: translate(50%, 50%) scale(1);
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 
 .popup ul {
   margin: 0;
-  padding: 2rem;
+  padding: 0.5rem;
 }
 
 .popup li {
-  padding: 0.5rem;
+  padding: 0.3rem;
   list-style-type: none;
 }
 
 .popup.active{
   display: block;
+  transform: translate(-50%, -50%) scale(1);
+
 }
 
 form {
   display: grid;
   justify-items: center;
   align-content: center;
+  color: darkslategrey;
+  /* padding: 10px; */
+  font-size: 23px;
+}
+
+form input, form button{
+  width: 10rem;
+  border: none;
+  outline: none;
+  font-size: large;
+  color: brown;
 }
 
 #add-book-btn {
-  font-size: 18px;
   border-radius: 20px;
+  background-color: gainsboro;
+  margin: 0.5rem;
 }
 
-li label {
-  /* height: 40px; */
-  font-size: 23px;
+#add-book-btn:hover {
+  background-color: gray;
 }
 
 header {
@@ -115,7 +130,7 @@ header {
 }
 
 .card button:first-child:hover {
-  opacity: 90%;
+  opacity: 80%;
 }
 
 .card p {
