@@ -76,6 +76,8 @@ form input, form button{
   color: brown;
 }
 
+
+
 #add-book-btn {
   border-radius: 20px;
   background-color: gainsboro;
@@ -95,7 +97,10 @@ header {
   color: white;
   font-size: 40px;
   text-shadow: 2px 2px 2px black;
+  box-shadow: inset 0px 0px 10px black;
+
 }
+
 
 
 .dashboard {
@@ -142,6 +147,12 @@ font-size: large;
 color: white;
   text-align: center;
   background-color: saddlebrown;
+  box-shadow: inset 0px 0px 10px black;
+}
+
+footer p{
+  padding: 1rem;
+  margin: 0;
 }
 
 .blur{
