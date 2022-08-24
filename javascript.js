@@ -57,6 +57,9 @@ function createCard(book, index, libraryArray) {
   newRead.textContent = "Have you read it?";
   btnRead.textContent = book.read;
 
+  if (btnRead.textContent == "yes") btnRead.style.background = "lightgreen";
+  else btnRead.style.background = "lightyellow";
+
   newCard.appendChild(btnRemove);
   newCard.appendChild(newTitle);
   newCard.appendChild(newAuthor);
