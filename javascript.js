@@ -25,6 +25,12 @@ class Book {
   }
 }
 
+class Library {
+  constructor() {
+    this.books = [];
+  }
+}
+
 function showFormPopup() {
   popupForm.classList.add("active");
   blurryLayer.classList.add("active");
@@ -113,11 +119,15 @@ btnAddBook.addEventListener("click", (event) => {
     );
     addBookToLibrary(NewBook);
     printLibrary(myLibrary);
-    refreshForm();
-    popupForm.classList.remove("active");
-    blurryLayer.classList.remove("active");
+    closePopup();
   }
 });
+
+function closePopup() {
+  refreshForm();
+  popupForm.classList.remove("active");
+  blurryLayer.classList.remove("active");
+}
 
 function btnToggle() {
   let btn = document.getElementById("read");
@@ -142,7 +152,6 @@ dashboardCards.addEventListener("click", (e) => {
           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
         )
       ].read = "no";
-      //I have to find in myLibrary the element to be updated
     } else {
       targetBtn.parentNode.lastChild.textContent = "yes";
       targetBtn.parentNode.lastChild.style.background = "lightgreen";
@@ -153,4 +162,10 @@ dashboardCards.addEventListener("click", (e) => {
       ].read = "yes";
     }
   }
+});
+
+blurryLayer.addEventListener("click", closePopup);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key == "Escape") closePopup();
 });
