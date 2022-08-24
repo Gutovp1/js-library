@@ -9,7 +9,7 @@ const btnInsertBook = document.querySelector(".btn-insert-book");
 const popupForm = document.querySelector(".popup");
 const blurryLayer = document.querySelector(".blur");
 
-let myLibrary = [];
+// let myLibrary = [];
 
 class Book {
   constructor(title, author, pages, read) {
@@ -31,6 +31,8 @@ class Library {
   }
 }
 
+let myLibrary = new Library();
+
 function showFormPopup() {
   popupForm.classList.add("active");
   blurryLayer.classList.add("active");
@@ -39,7 +41,7 @@ function showFormPopup() {
 btnInsertBook.addEventListener("click", showFormPopup);
 
 function addBookToLibrary(book) {
-  myLibrary.push(book);
+  myLibrary.books.push(book);
 }
 
 function createCard(book, index, libraryArray) {
@@ -84,9 +86,10 @@ function printLibrary(array) {
 dashboardCards.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
     e.target.parentNode.outerHTML = "";
-    myLibrary = myLibrary.filter(function (book) {
+    myLibrary.books = myLibrary.books.filter(function (book) {
       return book.id !== parseInt(e.target.dataset.id);
     });
+    populateStorage();
   }
 });
 
@@ -103,7 +106,7 @@ function validateInputs() {
 function refreshForm() {
   bookForm.reset();
   bookForm.read.value = "no";
-  bookForm.read.style.background = "white";
+  bookForm.read.style.background = "lightyellow";
   bookForm.title.focus();
 }
 
@@ -118,8 +121,9 @@ btnAddBook.addEventListener("click", (event) => {
       readInput.value
     );
     addBookToLibrary(NewBook);
-    printLibrary(myLibrary);
+    printLibrary(myLibrary.books);
     closePopup();
+    populateStorage();
   }
 });
 
@@ -147,20 +151,21 @@ dashboardCards.addEventListener("click", (e) => {
     if (targetBtn.parentNode.lastChild.textContent == "yes") {
       targetBtn.parentNode.lastChild.textContent = "no";
       targetBtn.parentNode.lastChild.style.background = "lightyellow";
-      myLibrary[
-        myLibrary.findIndex(
+      myLibrary.books[
+        myLibrary.books.findIndex(
           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
         )
       ].read = "no";
     } else {
       targetBtn.parentNode.lastChild.textContent = "yes";
       targetBtn.parentNode.lastChild.style.background = "lightgreen";
-      myLibrary[
-        myLibrary.findIndex(
+      myLibrary.books[
+        myLibrary.books.findIndex(
           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
         )
       ].read = "yes";
     }
+    populateStorage();
   }
 });
 
@@ -169,3 +174,21 @@ blurryLayer.addEventListener("click", closePopup);
 document.addEventListener("keydown", (e) => {
   if (e.key == "Escape") closePopup();
 });
+
+//Local Storage
+function populateStorage() {
+  window.localStorage.setItem("library", JSON.stringify(myLibrary.books));
+}
+
+function restoreLocalStorage() {
+  myLibrary.books = JSON.parse(localStorage.getItem("library"));
+}
+
+if (!localStorage.getItem("library")) {
+  populateStorage();
+} else {
+  restoreLocalStorage();
+  printLibrary(myLibrary.books);
+}
+
+// dashboardCards.onchange = populateStorage;
