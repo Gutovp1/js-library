@@ -80,6 +80,7 @@ function createCard(book, index, libraryArray) {
 function printLibrary(array) {
   dashboardCards.innerHTML = ""; //clear the dashboard beforehand
   array.forEach((element, index, arr) => createCard(element, index, arr));
+  dashboardCards.lastChild.classList.remove("animate");
 }
 
 //delete button for each book added
@@ -131,6 +132,7 @@ function closePopup() {
   refreshForm();
   popupForm.classList.remove("active");
   blurryLayer.classList.remove("active");
+  dashboardCards.lastChild.classList.add("animate");
 }
 
 function btnToggle() {

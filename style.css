@@ -28,13 +28,14 @@ header {
   border-radius: 50px;
   border: none;
   font-size: 16px;
+  opacity: 90%;
   box-shadow: 2px 2px 1px black;
+  transform: scale(1);
+  animation: pulse 2s infinite;
 }
 
 .btn-insert-book:hover{
-  /* opacity: 80%; */
-  padding: 0.2rem 0.5rem;
-  font-size: large;
+  opacity: 100%;
 }
 
 .btn-insert-book:active{
@@ -130,7 +131,12 @@ form input, form button{
   font-weight: bolder;
   border-radius: 10px;
 }
- 
+
+.card.animate{
+  transform: translateX(-100rem);
+  animation: fadeInUp 1s ease forwards;
+}
+
 .card:hover{
     background-color: white;  
   }
@@ -141,10 +147,12 @@ form input, form button{
   background-color: red;
   border-radius: 15px;
   border: none;
+  transition: transform 300ms;
 }
 
 .card button:first-child:hover {
   opacity: 80%;
+  transform: rotate(180deg);
 }
 
 .card p {
@@ -163,7 +171,7 @@ form input, form button{
 }
 
 .read:hover{
-  opacity: 70%;
+  font-weight: bold;
 }
 
 footer{
@@ -191,4 +199,24 @@ footer p{
 
 .blur.active{
   display: block;
+}
+
+@keyframes fadeInUp {
+  to{
+    opacity: 1;
+    transform: translateX(0rem);
+  }
+  
+}
+
+@keyframes pulse{
+  0%{
+    transform: scale(0.95);
+  }
+  70%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(0.95);
+  }
 }
