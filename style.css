@@ -1,12 +1,18 @@
+:root{
+  --light-bgc: sandybrown;
+  --dark-bgc: saddlebrown;
+  --writing-c: brown;
+}
+
 body {
-  background-color: saddlebrown;
+  background-color: var(--dark-bgc);
   margin: 0;
   padding: 0;
 }
 
 
 header {
-  background-color: saddlebrown;
+  background-color: var(--dark-bgc);
   text-align: center;
   align-items: center;
   padding: 0.9rem;
@@ -24,7 +30,7 @@ header {
   justify-self: center;
   background-color: white;
   padding: 0.2rem 0.5rem;
-  color: brown;
+  color: var(--writing-c);
   border-radius: 50px;
   border: none;
   font-size: 16px;
@@ -43,16 +49,18 @@ header {
   color: black;
 }
 
+/* .confirmation{
+  
+} */
 
 .popup {
   position:fixed;
   left: 50%;
   top: 50%;
   z-index: 1;
-  /* width: 30vw; */
   width: 15rem;
-  color: white;
-  background-color: sandybrown;
+  color: var(--writing-c);
+  background-color: var(--light-bgc);
   display: none;
   transform: translate(-50%, -50%) scale(1);
   padding: 0.5rem;
@@ -72,7 +80,6 @@ header {
 .popup.active{
   display: block;
   transform: translate(-50%, -50%) scale(1);
-
 }
 
 form {
@@ -89,7 +96,7 @@ form input, form button{
   border: none;
   outline: none;
   font-size: large;
-  color: brown;
+  /* color: var(--writing-c); */
 }
 
 
@@ -107,7 +114,7 @@ form input, form button{
 
 
 .dashboard {
-  background-color: saddlebrown;
+  background-color: var(--dark-bgc);
   background-image: url(./img/library-bgi.png);
   background-image: repeat;
   min-height: 65vh;
@@ -118,8 +125,8 @@ form input, form button{
 }
 
 .card {
-  background-color: sandybrown;
-  color: brown;
+  background-color: var(--light-bgc);
+  color: var(--writing-c);
   margin: 5px;
   padding-bottom: 8px;
   height: 10rem;
@@ -178,7 +185,7 @@ footer{
 font-size: large;
 color: white;
   text-align: center;
-  background-color: saddlebrown;
+  background-color: var(--dark-bgc);
   box-shadow: inset 0px 5px 10px black;
 }
 

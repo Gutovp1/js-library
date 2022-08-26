@@ -1,27 +1,28 @@
 const titleInput = document.querySelector("#title");
 const authorInput = document.querySelector("#author");
-const pagesInput = document.querySelector("#pages");
+const yearInput = document.querySelector("#year");
 const readInput = document.querySelector("#read");
 const dashboardCards = document.querySelector(".dashboard");
 const bookForm = document.querySelector(".book-form");
 const btnAddBook = document.querySelector("#add-book-btn");
 const btnInsertBook = document.querySelector(".btn-insert-book");
-const popupForm = document.querySelector(".popup");
 const blurryLayer = document.querySelector(".blur");
+const popupForm = document.querySelectorAll(".popup")[0];
+const popupConfirm = document.querySelectorAll(".popup")[1];
 
 // let myLibrary = [];
 
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title, author, year, read) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
+    this.year = year;
     this.read = read;
     this.id = Date.now();
   }
 
   get info() {
-    return `${this.title} ${this.author} ${this.pages}  ${this.read}`;
+    return `${this.title} ${this.author} ${this.year}  ${this.read}`;
   }
 }
 
@@ -61,7 +62,7 @@ function createCard(book, index, libraryArray) {
   btnRemove.textContent = "X";
   newTitle.textContent = "Title: " + book.title + "\n";
   newAuthor.textContent = "Author: " + book.author + "\n";
-  newPages.textContent = "Pages: " + book.pages + "\n";
+  newPages.textContent = "Reading Year: " + book.year + "\n";
   newRead.textContent = "Have you read it?";
   btnRead.textContent = book.read;
 
@@ -86,6 +87,7 @@ function printLibrary(array) {
 //delete button for each book added
 dashboardCards.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
+    confirmDelete();
     e.target.parentNode.outerHTML = "";
     myLibrary.books = myLibrary.books.filter(function (book) {
       return book.id !== parseInt(e.target.dataset.id);
@@ -94,11 +96,17 @@ dashboardCards.addEventListener("click", (e) => {
   }
 });
 
+function confirmDelete() {
+  popupConfirm.classList.add("active");
+  blurryLayer.classList.add("active");
+  //add event listeners for yes and no
+}
+
 function validateInputs() {
   if (
-    titleInput.value != "" &&
-    authorInput.value != "" &&
-    pagesInput.value != ""
+    titleInput.value != ""
+    // && authorInput.value != "" &&
+    // yearInput.value != ""
   ) {
     return true;
   } else return false;
@@ -106,7 +114,7 @@ function validateInputs() {
 
 function refreshForm() {
   bookForm.reset();
-  bookForm.read.value = "no";
+  bookForm.read.value = "";
   bookForm.read.style.background = "lightyellow";
   bookForm.title.focus();
 }
@@ -118,7 +126,7 @@ btnAddBook.addEventListener("click", (event) => {
     let NewBook = new Book(
       titleInput.value,
       authorInput.value,
-      pagesInput.value,
+      yearInput.value,
       readInput.value
     );
     addBookToLibrary(NewBook);
@@ -131,8 +139,10 @@ btnAddBook.addEventListener("click", (event) => {
 function closePopup() {
   refreshForm();
   popupForm.classList.remove("active");
+  popupConfirm.classList.remove("active");
   blurryLayer.classList.remove("active");
   dashboardCards.lastChild.classList.add("animate");
+  //fix this animation when abort form input
 }
 
 function btnToggle() {
