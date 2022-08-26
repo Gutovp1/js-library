@@ -4,11 +4,10 @@ const yearInput = document.querySelector("#year");
 const readInput = document.querySelector("#read");
 const dashboardCards = document.querySelector(".dashboard");
 const bookForm = document.querySelector(".book-form");
+const popupForm = document.querySelector(".popup");
 const btnAddBook = document.querySelector("#add-book-btn");
 const btnInsertBook = document.querySelector(".btn-insert-book");
 const blurryLayer = document.querySelector(".blur");
-const popupForm = document.querySelectorAll(".popup")[0];
-const popupConfirm = document.querySelectorAll(".popup")[1];
 
 // let myLibrary = [];
 
@@ -63,7 +62,7 @@ function createCard(book, index, libraryArray) {
   newTitle.textContent = "Title: " + book.title + "\n";
   newAuthor.textContent = "Author: " + book.author + "\n";
   newPages.textContent = "Reading Year: " + book.year + "\n";
-  newRead.textContent = "Have you read it?";
+  newRead.textContent = "Have you already read it?";
   btnRead.textContent = book.read;
 
   if (btnRead.textContent == "yes") btnRead.style.background = "lightgreen";
@@ -84,30 +83,23 @@ function printLibrary(array) {
   dashboardCards.lastChild.classList.remove("animate");
 }
 
-//delete button for each book added
 dashboardCards.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
-    confirmDelete();
-    e.target.parentNode.outerHTML = "";
-    myLibrary.books = myLibrary.books.filter(function (book) {
-      return book.id !== parseInt(e.target.dataset.id);
-    });
-    populateStorage();
+    if (confirm("Are you sure you want to delete this book?"))
+      confirmDelete(e.target);
   }
 });
 
-function confirmDelete() {
-  popupConfirm.classList.add("active");
-  blurryLayer.classList.add("active");
-  //add event listeners for yes and no
+function confirmDelete(targ) {
+  targ.parentNode.outerHTML = "";
+  myLibrary.books = myLibrary.books.filter(function (book) {
+    return book.id !== parseInt(targ.dataset.id);
+  });
+  populateStorage();
 }
 
 function validateInputs() {
-  if (
-    titleInput.value != ""
-    // && authorInput.value != "" &&
-    // yearInput.value != ""
-  ) {
+  if (titleInput.value != "") {
     return true;
   } else return false;
 }
@@ -131,18 +123,17 @@ btnAddBook.addEventListener("click", (event) => {
     );
     addBookToLibrary(NewBook);
     printLibrary(myLibrary.books);
-    closePopup();
+    closePopup(NewBook);
     populateStorage();
   }
 });
 
-function closePopup() {
+function closePopup(obj = {}) {
   refreshForm();
   popupForm.classList.remove("active");
-  popupConfirm.classList.remove("active");
   blurryLayer.classList.remove("active");
-  dashboardCards.lastChild.classList.add("animate");
-  //fix this animation when abort form input
+  //Animate card only when a book is added
+  if (obj !== {}) dashboardCards.lastChild.classList.add("animate");
 }
 
 function btnToggle() {
@@ -202,5 +193,3 @@ if (!localStorage.getItem("library")) {
   restoreLocalStorage();
   printLibrary(myLibrary.books);
 }
-
-// dashboardCards.onchange = populateStorage;

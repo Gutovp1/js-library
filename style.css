@@ -49,9 +49,6 @@ header {
   color: black;
 }
 
-/* .confirmation{
-  
-} */
 
 .popup {
   position:fixed;
@@ -66,6 +63,7 @@ header {
   padding: 0.5rem;
   border-radius: 10px;
 }
+
 
 .popup ul {
   margin: 0;
@@ -82,13 +80,23 @@ header {
   transform: translate(-50%, -50%) scale(1);
 }
 
+.confirm{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 form {
   display: grid;
   justify-items: center;
+  justify-content: center;
   align-content: center;
   color: darkslategrey;
-  /* padding: 10px; */
   font-size: 23px;
+}
+
+h4 {
+  color: darkslategrey;
 }
 
 form input, form button{
