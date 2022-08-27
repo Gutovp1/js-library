@@ -8,6 +8,7 @@ const popupForm = document.querySelector(".popup");
 const btnAddBook = document.querySelector("#add-book-btn");
 const btnInsertBook = document.querySelector(".btn-insert-book");
 const blurryLayer = document.querySelector(".blur");
+const errorMessage = document.querySelectorAll("label")[0];
 
 // let myLibrary = [];
 
@@ -52,12 +53,11 @@ function createCard(book, index, libraryArray) {
   const newPages = document.createElement("div");
   const newRead = document.createElement("div");
   const btnRead = document.createElement("input");
-  // const btnRead = document.createElement("button");
 
   newCard.className = "card";
   btnRemove.className = "delete";
   btnRead.className = "read";
-  btnRead.setAttribute("type", "checkbox"); //new
+  btnRead.setAttribute("type", "checkbox");
   btnRemove.setAttribute("data-id", `${book.id}`);
 
   btnRemove.textContent = "X";
@@ -67,16 +67,12 @@ function createCard(book, index, libraryArray) {
   newRead.textContent = "Have you already read it?";
   btnRead.checked = book.read; //.read = .read.checked
 
-  // if (btnRead.textContent == "yes") btnRead.style.background = "lightgreen";
-  // else btnRead.style.background = "lightyellow";
-
   newCard.appendChild(btnRemove);
   newCard.appendChild(newTitle);
   newCard.appendChild(newAuthor);
   newCard.appendChild(newPages);
   newCard.appendChild(newRead);
   newCard.appendChild(btnRead);
-  console.log(btnRead.checked);
   dashboardCards.appendChild(newCard);
 }
 
@@ -102,16 +98,28 @@ function confirmDelete(targ) {
 }
 
 function validateInputs() {
-  if (titleInput.value != "") {
-    return true;
-  } else return false;
+  //JS validation
+  if (!titleInput.validity.valueMissing) {
+    titleEntered = titleInput.value.trim();
+    if (
+      !myLibrary.books.find((book) => book.title == titleInput.value.trim())
+    ) {
+      errorMessage.textContent = " ";
+      return true;
+    }
+    errorMessage.textContent = "This title alread exists.";
+    return false;
+  }
+  errorMessage.textContent = "Please write a title.";
 }
+
+titleInput.addEventListener("input", validateInputs);
+
+bookForm.addEventListener("submit", validateInputs);
 
 function refreshForm() {
   bookForm.reset();
-  bookForm.read.checked = false;
-  // bookForm.read.value = "";
-  // bookForm.read.style.background = "lightyellow";
+  bookForm.read.checked = true;
   bookForm.title.focus();
 }
 
@@ -124,7 +132,6 @@ btnAddBook.addEventListener("click", (event) => {
       authorInput.value,
       yearInput.value,
       readInput.checked
-      // readInput.value
     );
     console.log(NewBook);
     addBookToLibrary(NewBook);
@@ -141,17 +148,6 @@ function closePopup(obj = {}) {
   //Animate card only when a book is added
   if (obj !== {}) dashboardCards.lastChild.classList.add("animate");
 }
-//HTML onclick="btnToggle()"
-// function btnToggle() {
-//   let btn = document.getElementById("read");
-//   if (btn.value == "no") {
-//     btn.value = "yes";
-//     btn.style.background = "lightgreen";
-//   } else {
-//     btn.value = "no";
-//     btn.style.background = "lightyellow";
-//   }
-// }
 
 //change the read status for added books
 dashboardCards.addEventListener("click", (e) => {
@@ -166,34 +162,10 @@ dashboardCards.addEventListener("click", (e) => {
   populateStorage();
 });
 
-// dashboardCards.addEventListener("click", (e) => {
-//   let targetBtn = e.target;
-//   if (targetBtn.classList.contains("read")) {
-//     if (targetBtn.parentNode.lastChild.textContent == "yes") {
-//       targetBtn.parentNode.lastChild.textContent = "no";
-//       targetBtn.parentNode.lastChild.style.background = "lightyellow";
-//       myLibrary.books[
-//         myLibrary.books.findIndex(
-//           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
-//         )
-//       ].read = "no";
-//     } else {
-//       targetBtn.parentNode.lastChild.textContent = "yes";
-//       targetBtn.parentNode.lastChild.style.background = "lightgreen";
-//       myLibrary.books[
-//         myLibrary.books.findIndex(
-//           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
-//         )
-//       ].read = "yes";
-//     }
-//     populateStorage();
-//   }
-// });
-
 blurryLayer.addEventListener("click", closePopup);
 
 document.addEventListener("keydown", (e) => {
-  if (e.key == "Escape") closePopup();
+  if (e.key === "Escape") closePopup();
 });
 
 //Local Storage
