@@ -51,11 +51,13 @@ function createCard(book, index, libraryArray) {
   const newAuthor = document.createElement("div");
   const newPages = document.createElement("div");
   const newRead = document.createElement("div");
-  const btnRead = document.createElement("button");
+  const btnRead = document.createElement("input");
+  // const btnRead = document.createElement("button");
 
   newCard.className = "card";
   btnRemove.className = "delete";
   btnRead.className = "read";
+  btnRead.setAttribute("type", "checkbox"); //new
   btnRemove.setAttribute("data-id", `${book.id}`);
 
   btnRemove.textContent = "X";
@@ -63,10 +65,10 @@ function createCard(book, index, libraryArray) {
   newAuthor.textContent = "Author: " + book.author + "\n";
   newPages.textContent = "Reading Year: " + book.year + "\n";
   newRead.textContent = "Have you already read it?";
-  btnRead.textContent = book.read;
+  btnRead.checked = book.read; //.read = .read.checked
 
-  if (btnRead.textContent == "yes") btnRead.style.background = "lightgreen";
-  else btnRead.style.background = "lightyellow";
+  // if (btnRead.textContent == "yes") btnRead.style.background = "lightgreen";
+  // else btnRead.style.background = "lightyellow";
 
   newCard.appendChild(btnRemove);
   newCard.appendChild(newTitle);
@@ -74,6 +76,7 @@ function createCard(book, index, libraryArray) {
   newCard.appendChild(newPages);
   newCard.appendChild(newRead);
   newCard.appendChild(btnRead);
+  console.log(btnRead.checked);
   dashboardCards.appendChild(newCard);
 }
 
@@ -106,8 +109,9 @@ function validateInputs() {
 
 function refreshForm() {
   bookForm.reset();
-  bookForm.read.value = "";
-  bookForm.read.style.background = "lightyellow";
+  bookForm.read.checked = false;
+  // bookForm.read.value = "";
+  // bookForm.read.style.background = "lightyellow";
   bookForm.title.focus();
 }
 
@@ -119,8 +123,10 @@ btnAddBook.addEventListener("click", (event) => {
       titleInput.value,
       authorInput.value,
       yearInput.value,
-      readInput.value
+      readInput.checked
+      // readInput.value
     );
+    console.log(NewBook);
     addBookToLibrary(NewBook);
     printLibrary(myLibrary.books);
     closePopup(NewBook);
@@ -135,42 +141,54 @@ function closePopup(obj = {}) {
   //Animate card only when a book is added
   if (obj !== {}) dashboardCards.lastChild.classList.add("animate");
 }
-
-function btnToggle() {
-  let btn = document.getElementById("read");
-  if (btn.value == "no") {
-    btn.value = "yes";
-    btn.style.background = "lightgreen";
-  } else {
-    btn.value = "no";
-    btn.style.background = "lightyellow";
-  }
-}
+//HTML onclick="btnToggle()"
+// function btnToggle() {
+//   let btn = document.getElementById("read");
+//   if (btn.value == "no") {
+//     btn.value = "yes";
+//     btn.style.background = "lightgreen";
+//   } else {
+//     btn.value = "no";
+//     btn.style.background = "lightyellow";
+//   }
+// }
 
 //change the read status for added books
 dashboardCards.addEventListener("click", (e) => {
   let targetBtn = e.target;
   if (targetBtn.classList.contains("read")) {
-    if (targetBtn.parentNode.lastChild.textContent == "yes") {
-      targetBtn.parentNode.lastChild.textContent = "no";
-      targetBtn.parentNode.lastChild.style.background = "lightyellow";
-      myLibrary.books[
-        myLibrary.books.findIndex(
-          (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
-        )
-      ].read = "no";
-    } else {
-      targetBtn.parentNode.lastChild.textContent = "yes";
-      targetBtn.parentNode.lastChild.style.background = "lightgreen";
-      myLibrary.books[
-        myLibrary.books.findIndex(
-          (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
-        )
-      ].read = "yes";
-    }
-    populateStorage();
+    myLibrary.books[
+      myLibrary.books.findIndex(
+        (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
+      )
+    ].read = targetBtn.parentNode.lastChild.checked;
   }
+  populateStorage();
 });
+
+// dashboardCards.addEventListener("click", (e) => {
+//   let targetBtn = e.target;
+//   if (targetBtn.classList.contains("read")) {
+//     if (targetBtn.parentNode.lastChild.textContent == "yes") {
+//       targetBtn.parentNode.lastChild.textContent = "no";
+//       targetBtn.parentNode.lastChild.style.background = "lightyellow";
+//       myLibrary.books[
+//         myLibrary.books.findIndex(
+//           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
+//         )
+//       ].read = "no";
+//     } else {
+//       targetBtn.parentNode.lastChild.textContent = "yes";
+//       targetBtn.parentNode.lastChild.style.background = "lightgreen";
+//       myLibrary.books[
+//         myLibrary.books.findIndex(
+//           (e) => e.id == targetBtn.parentNode.firstChild.dataset.id
+//         )
+//       ].read = "yes";
+//     }
+//     populateStorage();
+//   }
+// });
 
 blurryLayer.addEventListener("click", closePopup);
 
