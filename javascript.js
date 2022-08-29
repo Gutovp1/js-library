@@ -100,7 +100,6 @@ function confirmDelete(targ) {
 function validateInputs() {
   //JS validation
   if (!titleInput.validity.valueMissing) {
-    titleEntered = titleInput.value.trim();
     if (
       !myLibrary.books.find((book) => book.title == titleInput.value.trim())
     ) {

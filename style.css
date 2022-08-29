@@ -135,7 +135,7 @@ label[for="title"]{
   background-color: var(--dark-bgc);
   background-image: url(./img/library-bgi.png);
   background-image: repeat;
-  min-height: 65vh;
+  min-height: 30vh;
   /* min-height: 30rem; */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
